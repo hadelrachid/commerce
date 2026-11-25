@@ -18,8 +18,11 @@ jobs:
 
       - name: Package Plugin Archive
         run: |
+          mkdir -p /tmp/pkg/commerce
+          cp -r . /tmp/pkg/commerce/
+          rm -rf /tmp/pkg/commerce/.git /tmp/pkg/commerce/.github /tmp/pkg/commerce/dist
           mkdir -p dist
-          zip -r "dist/commerce.zip" . -x ".git/*" -x ".github/*" -x "dist/*" -x "*.zip"
+          (cd /tmp/pkg && zip -r "$GITHUB_WORKSPACE/dist/commerce.zip" commerce)
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v1
